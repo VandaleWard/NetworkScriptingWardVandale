@@ -5,7 +5,7 @@ $Dns1 = "172.20.0.2"
 $Dns2 = "172.20.0.3"
 $IPType = "IPv4"
 # Retrieve the network adapter that you want to configure
-$adapter = Get-NetAdapter -Physical | Where-Object {$_.PhysicalMediaType -match "802.3" -and $_.Status -eq "up"}s
+$adapter = Get-NetAdapter -Physical | Where-Object {$_.PhysicalMediaType -match "802.3" -and $_.Status -eq "up"}
 # Remove any existing IP, gateway from our ipv4 adapter
 If (($adapter | Get-NetIPConfiguration).IPv4Address.IPAddress) {
  $adapter | Remove-NetIPAddress -AddressFamily $IPType -Confirm:$false
