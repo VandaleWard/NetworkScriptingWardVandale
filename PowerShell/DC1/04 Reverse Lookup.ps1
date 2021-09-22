@@ -13,9 +13,14 @@ If (($adapter | Get-NetIPConfiguration).IPv4Address.IPAddress) {
 If (($adapter | Get-NetIPConfiguration).Ipv4DefaultGateway) {
  $adapter | Remove-NetRoute -AddressFamily $IPType -Confirm:$false
 }
+ # Configure the IP address and default gateway
+$adapter | New-NetIPAddress `
+ -AddressFamily $IPType `
+ -IPAddress $IP `
+ -PrefixLength $MaskBits `
+ -DefaultGateway $Gateway
 # Configure the DNS client server IP addresses
 $adapter | Set-DnsClientServerAddress -ServerAddresses ($Dns1, $Dns2)
-
 
 Add-DnsServerPrimaryZone -NetworkID $NetworkID -ZoneFile $ZoneFile -DynamicUpdate None -PassThru
 
