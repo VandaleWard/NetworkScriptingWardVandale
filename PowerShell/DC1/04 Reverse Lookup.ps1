@@ -1,6 +1,9 @@
 ﻿$NetworkID = "192.168.1.0/24"
 $ZoneFile = "1.168.192.in-addr.arpa.dns"
 
+$IP = "192.168.1.2"
+$MaskBits = 24 # This means subnet mask = 255.255.255.0
+$Gateway = "192.168.1.1"
 $Dns1 = "172.20.0.2"
 $Dns2 = "172.20.0.3"
 $IPType = "IPv4"
