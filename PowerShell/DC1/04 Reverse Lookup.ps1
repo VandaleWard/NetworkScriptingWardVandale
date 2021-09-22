@@ -25,7 +25,5 @@ $adapter | New-NetIPAddress `
 # Configure the DNS client server IP addresses
 $adapter | Set-DnsClientServerAddress -ServerAddresses ($Dns1, $Dns2)
 
-Add-DnsServerPrimaryZone -NetworkID $NetworkID -ZoneFile $ZoneFile -DynamicUpdate None -PassThru
-
 Add-DnsServerPrimaryZone -NetworkId 192.168.1.0/24 -ReplicationScope Domain
 Register-DnsClient
