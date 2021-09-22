@@ -1,1 +1,0 @@
-﻿Get-ADUser -Filter * | Sort-Object Name | Format-Table Name, UserPrincipalName
