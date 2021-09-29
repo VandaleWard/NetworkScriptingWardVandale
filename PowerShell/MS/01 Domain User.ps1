@@ -1,1 +1,1 @@
-﻿
+﻿Add-Computer -DomainName intranet.mijnschool.be -Credential Administrator -Restart
