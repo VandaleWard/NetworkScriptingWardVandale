@@ -8,3 +8,5 @@ Add-DhcpServerV4Scope -Name "Kortrijk" -StartRange 192.168.1.1 -EndRange 192.168
 Set-DhcpServerV4OptionValue -DnsServer $dnsArray -Router 192.168.1.1 -Force
 Add-Dhcpserverv4ExclusionRange -ScopeId 192.168.1.0 -StartRange 192.168.1.1 -EndRange 192.168.1.10
 Add-DhcpServerv4Reservation -ScopeId 192.168.1.0 -IPAddress 192.168.1.11 -ClientId $macPrinter -Description "Reservation for Printer"
+
+Set-ItemProperty registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\ServerManager\Roles\12 -Name ConfigurationState -Value 2
