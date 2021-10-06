@@ -1,5 +1,5 @@
 ﻿Import-Module ActiveDirectory
-$ADUsers = Import-Csv C:\Users\Administrator\Downloads\UserAccounts.csv -Delimiter ";"
+$ADUsers = Import-Csv C:\Users\Administrator\Desktop\NetworkScriptingWardVandale\PowerShell\DC1\FILES\UserAccounts.csv -Delimiter ";"
 foreach ($User in $ADUsers) {
     $Name = $User.Name
     $SamAccountName = $User.SamAccountName
@@ -17,7 +17,7 @@ foreach ($User in $ADUsers) {
         -GivenName $Description `
         -Surname $Path `
         -DisplayName $DisplayName `
-        -AccountPassword $AccountPassword `
+        -AccountPassword (ConvertTo-SecureString $AccountPassword -AsPlainText -Force) `
         -HomeDrive $HomeDrive `
         -HomeDirectory $HomeDirectory `
         -ScriptPath $ScriptPath `
