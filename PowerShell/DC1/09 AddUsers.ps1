@@ -13,9 +13,10 @@ foreach ($User in $ADUsers) {
     $DisplayName = $User.DisplayName
     $AccountPassword = $User.AccountPassword
     $HomeDrive = $User.HomeDrive
-    $HomeDirectory = $User.HomeDirectory
+    $HomeDirectory = "\\ms\homedirs\$Username"
     $ScriptPath = $User.ScriptPath
     $Path = $User.Path
+    Write-Host "Creating user $Name" -ForegroundColor Green
 
         New-ADUser `
             -UserPrincipalName "$username@$UPN" `
@@ -31,5 +32,12 @@ foreach ($User in $ADUsers) {
             -Path $Path `
             -Enabled $True
 
-        Write-Host "The user account $Name is created." -ForegroundColor Cyan
+    Write-Host "    Creating Home folder for user $Name" -ForegroundColor DarkGreen
+        
+        New-Item -Path $HomeDirectory -type directory -Force
+        $acl = Get-Acl $HomeDirectory
+        $acl.SetAccessRuleProtection($False, $True)
+        $rule = New-Object System.Security.AccessControl.FileSystemAccessRule($Username, 'Modify', "ContainerInherit, ObjectInherit", "None", "Allow")
+        $acl.AddAccessRule($rule)
+        (Get-Item $HomeDirectory).SetAccessControl($acl)
 }
