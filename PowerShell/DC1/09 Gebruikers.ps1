@@ -1,6 +1,11 @@
 ﻿Import-Module ActiveDirectory
 $ADUsers = Import-Csv C:\Users\Administrator\Desktop\NetworkScriptingWardVandale\PowerShell\DC1\FILES\UserAccounts.csv -Delimiter ";"
+
+$UPN = "mijnschool.be"
+
 foreach ($User in $ADUsers) {
+
+    $Username = $User.Name.ToLower().replace(' ' , '""')
     $Name = $User.Name
     $SamAccountName = $User.SamAccountName
     $GivenName = $User.GivenName
@@ -11,16 +16,20 @@ foreach ($User in $ADUsers) {
     $HomeDirectory = $User.HomeDirectory
     $ScriptPath = $User.ScriptPath
     $Path = $User.Path
-    New-ADUser `
-        -Name $DisplayName `
-        -SamAccountName $Name `
-        -GivenName $Description `
-        -Surname $Path `
-        -DisplayName $DisplayName `
-        -AccountPassword (ConvertTo-SecureString $AccountPassword -AsPlainText -Force) `
-        -HomeDrive $HomeDrive `
-        -HomeDirectory $HomeDirectory `
-        -ScriptPath $ScriptPath `
-        -Path $Path
-    Write-Host "The User $Name is created." -ForegroundColor Cyan
+
+        New-ADUser `
+            -UserPrincipalName "$username@$UPN" `
+            -Name $Name `
+            -SamAccountName $SamAccountName `
+            -GivenName $GivenName `
+            -Surname $Surname `
+            -DisplayName $DisplayName `
+            -AccountPassword (ConvertTo-secureString $AccountPassword -AsPlainText -Force) `
+            -HomeDrive $HomeDrive `
+            -HomeDirectory $HomeDirectory `
+            -ScriptPath $ScriptPath `
+            -Path $Path `
+            -Enabled $True
+
+        Write-Host "The user account $Name is created." -ForegroundColor Cyan
 }

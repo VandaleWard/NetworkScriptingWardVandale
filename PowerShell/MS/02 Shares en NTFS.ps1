@@ -1,12 +1,12 @@
 ﻿$ComputerName = "MS"
 
  Invoke-Command -ComputerName $ComputerName -ScriptBlock { 
-             $homeFolder = "c:\Home"
+             $homeFolder = "c:\homedirs"
              Write-Host "Creating Home Folder"
              New-Item -Path $homeFolder -type directory -Force
 
              Write-Host "Making home folder a share"
-             New-SmbShare -Name "home" -Path $homeFolder -FullAccess "Everyone"
+             New-SmbShare -Name "homedirs" -Path $homeFolder -FullAccess "Everyone"
 
              Write-Host "Folder creation complete"
 
