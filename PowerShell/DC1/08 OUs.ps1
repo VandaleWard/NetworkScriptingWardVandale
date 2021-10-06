@@ -1,5 +1,5 @@
 ﻿Import-Module ActiveDirectory
-$ADOUs = Import-Csv C:\Users\Administrator\Downloads\OUs.csv -Delimiter ";"
+$ADOUs = Import-Csv C:\Users\Administrator\Desktop\NetworkScriptingWardVandale\PowerShell\DC1\FILES\OUs.csv -Delimiter ";"
 foreach ($OU in $ADOUs) {
     $DisplayName = $OU.DisplayName
     $Name = $OU.Name
