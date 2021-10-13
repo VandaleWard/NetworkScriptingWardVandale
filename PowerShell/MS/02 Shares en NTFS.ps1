@@ -1,16 +1,16 @@
 ﻿$ComputerName = "MS"
 
- Invoke-Command -ComputerName $ComputerName -ScriptBlock { 
-             $homeFolder = "c:\homedirs"
+ Invoke-Command -ComputerName $ComputerName -ScriptBlock {  # Invoke-Command is used on DC1 to input commands on the MS without connecting to it
+             $homeFolder = "c:\homedirs" # var
              Write-Host "Creating Home Folder"
-             New-Item -Path $homeFolder -type directory -Force
+             New-Item -Path $homeFolder -type directory -Force # Creating the folder
 
              Write-Host "Making home folder a share"
-             New-SmbShare -Name "homedirs" -Path $homeFolder -FullAccess "Everyone"
+             New-SmbShare -Name "homedirs" -Path $homeFolder -FullAccess "Everyone" # Sharing the folder
 
              Write-Host "Folder creation complete"
 
-
+             # Changing the Permissions NTFS
              Write-Host "ACL"
              $acl = Get-Acl $homeFolder
              $acl.SetAccessRuleProtection($True, $False)

@@ -1,7 +1,7 @@
-﻿$NetworkID = "192.168.1.0/24"
-$ZoneFile = "1.168.192.in-addr.arpa.dns"
+﻿$NetworkID = "192.168.1.0/24" # IP address of the network we're in
+$ZoneFile = "1.168.192.in-addr.arpa.dns" # Reverse lookup zone file
 
-$IP = "192.168.1.2"
+$IP = "192.168.1.2" # IP of the DC1
 $MaskBits = 24 # This means subnet mask = 255.255.255.0
 $Gateway = "192.168.1.1"
 $Dns1 = "172.20.0.2"
@@ -25,5 +25,5 @@ $adapter | New-NetIPAddress `
 # Configure the DNS client server IP addresses
 $adapter | Set-DnsClientServerAddress -ServerAddresses ($Dns1, $Dns2)
 
-Add-DnsServerPrimaryZone -NetworkId 192.168.1.0/24 -ReplicationScope Domain
-Register-DnsClient
+Add-DnsServerPrimaryZone -NetworkId 192.168.1.0/24 -ReplicationScope Domain # Creating DNS reverse lookup zone
+Register-DnsClient # Registering the zone

@@ -34,6 +34,7 @@ foreach ($User in $ADUsers) {
 
     Write-Host "    Creating Home folder for user $Name" -ForegroundColor DarkGreen
         
+        # Making A Home Directory for the user and changing the Permissions so that the user can Modify in the folder.
         New-Item -Path $HomeDirectory -type directory -Force
         $acl = Get-Acl $HomeDirectory
         $acl.SetAccessRuleProtection($False, $True)

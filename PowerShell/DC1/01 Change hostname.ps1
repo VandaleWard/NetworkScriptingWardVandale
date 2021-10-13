@@ -1,1 +1,1 @@
-﻿Rename-Computer -NewName "DC1" -Restart
+﻿Rename-Computer -NewName "DC1" -Restart #Changing the hostname of the Server

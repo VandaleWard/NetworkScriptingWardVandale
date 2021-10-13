@@ -1,1 +1,1 @@
-﻿Add-Computer -DomainName intranet.mijnschool.be -Credential Administrator -Restart
+﻿Add-Computer -DomainName intranet.mijnschool.be -Credential Administrator -Restart # Adding the MS to the Domain intranet.mijnschool.be

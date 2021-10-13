@@ -1,9 +1,9 @@
-﻿$IP = "192.168.1.2"
+﻿$IP = "192.168.1.2" # Desired IP Address on the Server
 $MaskBits = 24 # This means subnet mask = 255.255.255.0
-$Gateway = "192.168.1.1"
-$Dns1 = "172.20.0.2"
-$Dns2 = "172.20.0.3"
-$IPType = "IPv4"
+$Gateway = "192.168.1.1" # IP of PfSense
+$Dns1 = "172.20.0.2" # First DNS of Howest
+$Dns2 = "172.20.0.3" # Second DNS of Howest
+$IPType = "IPv4" # We're using IPv4, not IPv6
 # Retrieve the network adapter that you want to configure
 $adapter = Get-NetAdapter -Physical | Where-Object {$_.PhysicalMediaType -match "802.3" -and $_.Status -eq "up"}
 # Remove any existing IP, gateway from our ipv4 adapter
