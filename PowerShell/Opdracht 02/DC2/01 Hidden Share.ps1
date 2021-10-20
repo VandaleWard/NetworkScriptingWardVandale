@@ -17,7 +17,7 @@
              $acl.Access | % { $acl.RemoveAccessRule($_) } # I remove all security
              $rule = New-Object System.Security.AccessControl.FileSystemAccessRule('administrators', 'FullControl', "ContainerInherit, objectInherit", "None", 'Allow') # I set my admin account as also having access
              $acl.AddAccessRule($rule)
-             $rule = New-Object System.Security.AccessControl.FileSystemAccessRule('Authenticated Users', 'ReadandExecute', "None", "None", "Allow")
+             $rule = New-Object System.Security.AccessControl.FileSystemAccessRule('Authenticated Users', 'Modify', "None", "None", "Allow")
              $acl.AddAccessRule($rule)
              (Get-Item $profilesFolder).SetAccessControl($acl)
          }
