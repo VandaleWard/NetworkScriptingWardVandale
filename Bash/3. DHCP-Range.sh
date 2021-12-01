@@ -1,47 +1,63 @@
 #!/bin/bash
 
-# See if script is running as root
-if [ "$(id -u)" -ne 0 ]; then
-
-echo 'This script must be run by root' >&2
-echo ""
-echo "Stopping the script ..."
-
-exit 1
-
-fi
-
-sudo apt install isc-dhcp-server -y
-path2conf='/etc/dhcp/dhcpd.conf'
-
-# Create the conf
-echo "Creating backup of $path2conf..."
-if [ -d "/etc/dhcp/dhcp.conf.backup" ]
+# Check if the script is run as root
+if [ "$(id -u)" -ne 0 ]
 then
-    echo "    -> Already exists"
-else
-    mv /etc/dhcp/dhcpd.conf{,.backup}
-    touch $path2conf
-    echo "    -> Done!"
+        # Stopping the script
+        echo "This script must be run as root"
+        exit 1
 fi
 
+# Check for parameter
+if [ -z "$1" ]
+then
+        # Stopping the script
+        echo "Please run the script with a path to the input file"
+        exit 2
+fi
 
-    echo "    -> OK! $path2conf exists."
+echo "Checking if the input files exists..."
+if [ -f $1 ]
+then
+	echo "File found"
+else
+	echo "File not found, are you sure the path is correct and that the files exists?"
+	exit 3
+fi
 
-    echo "# a simple /etc/dhcp/dhcp.conf" > $path2conf
+echo "Updating the sytem...."
+apt update && apt upgrade --auto-remove -y
 
-    echo "subnet 192.168.1.0 netmask 255.255.255.0 {" >> $path2conf
-    echo "    range 192.168.1.1 192.168.1.254;" >> $path2conf
-    echo "    default-lease-time 3600;" >> $path2conf
-    echo "    max-lease-time 3600;" >> $path2conf
-    echo "    option subnet-mask 255.255.255.0;" >> $path2conf
-    echo "    option broadcast-address 192.168.1.255;" >> $path2conf
-    echo "    option routers 192.168.1.1; " >> $path2conf
-    echo "    option domain-name-servers 172.20.0.2, 172.20.0.3;" >> $path2conf
-    echo "}" >> $path2conf
+echo "Installing isc-dhcp-server..."
+apt install isc-dhcp-server -y
 
-    echo "INTERFACESv4='ens192'" > /etc/default/isc-dhcp-server
+echo "Making backup of original dhcpd.conf..."
+cp /etc/dhcp/dhcpd.conf /etc/dhcp/dhcp.conf
 
+echo "Configuring interfaces to listen on..."
 
-systemctl restart isc-dhcp-server.service
-systemctl status isc-dhcp-server.service
+echo "INTERFACESv4='ens33'" >> /etc/default/isc-dhcp-server
+
+while IFS=' ' read -r entry
+do
+	printf "$entry"
+	entryArray=(${entry})
+	subnet=${entryArray[1]}	
+	subnetMask=${entryArray[2]} 
+	router=${entryArray[3]}
+	beginRange=${entryArray[4]}
+	endRange=${entryArray[5]}
+
+	printf "subnet ${subnet} netmask ${subnetMask} {\n range ${beginRange} ${endRange};\n option routers ${router};\n option domain-name-servers ${router};\n}\n" >> /etc/dhcp/dhcpd.conf
+done < $1
+
+echo "restarting isc-dhcp-server"
+systemctl restart isc-dhcp-server
+
+if [ $? -eq 0 ]
+then
+        echo "Successfully restarted dhcp server"
+else
+        echo "An error occured during restart of dhcp server"
+        exit 4
+fi
