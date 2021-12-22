@@ -3,11 +3,10 @@ data "vsphere_virtual_machine" "ubuntu" {
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
-
 #create ubuntu vm
 
-resource "vsphere_virtual_machine" "ubunutu_vm" {
-  name             = "${var.student}-ubu"
+resource "vsphere_virtual_machine" "ubuntu-vm" {
+  name             = "ward-ubu"
   resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
   folder = var.folder_path
@@ -25,9 +24,9 @@ resource "vsphere_virtual_machine" "ubunutu_vm" {
 
   disk {
     label            = "disk0"
-    size             = data.vsphere_virtual_machine.ubuntu.disks.0.size
-    eagerly_scrub    = data.vsphere_virtual_machine.ubuntu.disks.0.eagerly_scrub
-    thin_provisioned = data.vsphere_virtual_machine.ubuntu.disks.0.thin_provisioned
+    size             = data.vsphere_virtual_machine.ubuntu.disks[0].size
+    eagerly_scrub    = data.vsphere_virtual_machine.ubuntu.disks[0].eagerly_scrub
+    thin_provisioned = data.vsphere_virtual_machine.ubuntu.disks[0].thin_provisioned
   }
 
   clone {
@@ -35,12 +34,12 @@ resource "vsphere_virtual_machine" "ubunutu_vm" {
 
     customize {
       linux_options {
-        host_name = "${var.student}-ubu"
+        host_name = "ward-ubu"
         domain    = "lab.local"
       }
 
       network_interface {
-        ipv4_address = "192.168.50.61"
+        ipv4_address = "192.168.50.50"
         ipv4_netmask = 24
       }
 
@@ -48,5 +47,4 @@ resource "vsphere_virtual_machine" "ubunutu_vm" {
       dns_server_list = ["192.168.40.1"]
     }
   }
-
 }
