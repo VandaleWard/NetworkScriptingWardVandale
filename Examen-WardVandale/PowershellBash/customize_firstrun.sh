@@ -1,29 +1,35 @@
 #!/bin/bash
 
-# Making variable filename 
-filename="firstrun.sh"
+# Vars
+currFile="firstrun.sh"
 
-# check if script is running as sudo
+# Check if script is running in sudo
 if [ "$(id -u)" -ne 0 ]; then
-  printf "Script must be executed with sudo!\n\n"
+  echo "Please run the script as a root! Using sudo ./customize_firstrun.sh"
   exit 1
+
 fi
 
-# Checking if the script firstrun.sh already exists
-if [ -f $filename ]
+# Checking if the file exists
+if [ -f $currFile ]
 then
-    printf "$filename exists"
+    echo "firstrun.sh exists"
 else
-    printf "    -> ERROR! $filename does not exist or is not in the same directory."
+    echo "!!!!!!!!!!!!!!!!!!!!!!"
+    echo "firstrun.sh seems nowhere to be found!"
+    echo "run this script in the same directory as firstrun.sh"
+    echo "Stopping the script, bye bye"
     exit 3
 fi
 
-#creating backup of the firstrun file
-backupFile="cp firstrun.sh firstrun.sh.backup"
+# Creatin Backup of file
+echo "Creating a backup from the file, please wait"
+backupFile="cp firstrun.sh firstrun.sh.bak"
 eval "$backupFile"
+echo "Backup complete\n\n"
 
-#edit the file
-sed -i '/firstrun.sh/ i # start fallback preconfig \
+
+sed -i '/firstrun.sh/ i # start fallback preconfig  \
 profile static_eth0 \
 static ip_address=192.168.168.168/24 \
 \
@@ -31,4 +37,4 @@ static ip_address=192.168.168.168/24 \
 interface eth0 \
 arping 192.168.66.6 \
 fallback static_eth0 \
-DHCPCDEOF' $FILENAME
+DHCPCDEOF' $currFile
