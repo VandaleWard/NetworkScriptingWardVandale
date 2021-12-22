@@ -50,7 +50,7 @@ resource "vsphere_virtual_machine" "ward-ubu" {
   folder = var.folder_path
 
   num_cpus = 4
-  memory   = 2
+  memory   = data.vsphere_virtual_machine.ubuntu-template.memory
   guest_id = data.vsphere_virtual_machine.ubuntu-template.guest_id
 
   scsi_type = data.vsphere_virtual_machine.ubuntu-template.scsi_type

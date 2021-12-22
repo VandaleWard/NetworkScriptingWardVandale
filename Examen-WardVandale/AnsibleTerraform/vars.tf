@@ -9,7 +9,7 @@ variable "password" {
 }
 
 variable "folder_path" {
-  default = "ward"
+  default = "wardvandale"
 }
 
 variable "vault_pass" {
