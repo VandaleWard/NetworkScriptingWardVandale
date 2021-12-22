@@ -26,9 +26,10 @@ fi
 echo "Creating a backup from the file, please wait"
 backupFile="cp firstrun.sh firstrun.sh.bak"
 eval "$backupFile"
-echo "Backup complete\n\n"
+echo "Backup complete"
 
 
+echo "Adding fallback addressed to firstrun.sh"
 sed -i '/firstrun.sh/ i # start fallback preconfig  \
 profile static_eth0 \
 static ip_address=192.168.168.168/24 \
