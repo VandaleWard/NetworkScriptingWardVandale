@@ -77,12 +77,12 @@ resource "vsphere_virtual_machine" "ward-ubu" {
       }
 
       network_interface {
-        ipv4_address = "192.168.40.50"
+        ipv4_address = "192.168.50.50"
         ipv4_netmask = 24
       }
 
-      ipv4_gateway = "192.168.40.1"
-      dns_server_list = ["192.168.40.1"]
+      ipv4_gateway = "192.168.50.1"
+      dns_server_list = ["192.168.40.16"]
     }
   }
 }
