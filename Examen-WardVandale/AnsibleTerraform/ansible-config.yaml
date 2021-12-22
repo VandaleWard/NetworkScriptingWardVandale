@@ -27,5 +27,5 @@
         remote_src: yes
 
     - name: Run docker
-      command: 'docker run -it -p 8080:8080 --volume /home/student/workshop:/content/datalab gcr-cache.registry.vapus.be/cloud-datalab/datalab:latest'
+      command: 'docker run -dit -p 8080:8080 --volume /home/student/workshop:/content/datalab gcr-cache.registry.vapus.be/cloud-datalab/datalab:latest'
       become: yes
