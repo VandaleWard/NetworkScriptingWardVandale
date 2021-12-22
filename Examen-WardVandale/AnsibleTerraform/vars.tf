@@ -1,18 +1,27 @@
-variable "username" {
-  type        = string
-  sensitive   = true
+variable "password" {
+  type = string
+  sensitive = true
+
 }
 
-variable "password" {
-  type        = string
-  sensitive   = true
+variable "user" {
+  type = string
+  sensitive = true
+}
+
+variable "student" {
+  default = "ward"
 }
 
 variable "folder_path" {
-  default = "wardvandale"
+  default = "ward-vandale"
 }
 
-variable "vault_pass" {
-  type        = string
-  sensitive   = true
+variable "vm_hostname" {
+  default = "webserver"
+}
+
+variable "vm_pwd" {
+  type = string
+  sensitive = true
 }

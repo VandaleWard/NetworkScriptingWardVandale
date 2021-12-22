@@ -1,3 +1,2 @@
-username = "administrator@vsphere.local"
+user = "administrator@vsphere.local"
 password = "P@ssw0rd"
-vault_pass = "123"
