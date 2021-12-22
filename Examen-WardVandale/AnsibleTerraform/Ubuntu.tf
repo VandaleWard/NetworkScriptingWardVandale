@@ -49,8 +49,8 @@ resource "vsphere_virtual_machine" "ward-ubu" {
   datastore_id     = data.vsphere_datastore.datastore.id
   folder = var.folder_path
 
-  num_cpus = 4
-  memory   = data.vsphere_virtual_machine.ubuntu-template.memory
+  num_cpus = "4"
+  memory   = 2
   guest_id = data.vsphere_virtual_machine.ubuntu-template.guest_id
 
   scsi_type = data.vsphere_virtual_machine.ubuntu-template.scsi_type
@@ -77,11 +77,11 @@ resource "vsphere_virtual_machine" "ward-ubu" {
       }
 
       network_interface {
-        ipv4_address = "192.168.50.50"
+        ipv4_address = "192.168.40.50"
         ipv4_netmask = 24
       }
 
-      ipv4_gateway = "192.168.50.1"
+      ipv4_gateway = "192.168.40.1"
       dns_server_list = ["192.168.40.1"]
     }
   }
