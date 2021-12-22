@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="64c7089e-9bd9-4b27-b4ad-d291e16d916d" name="Terraform">
+        <fileTransfer accessType="SFTP" host="localhost" port="2222" sshConfigId="2da9b707-b6a1-4fed-ac61-6e997f27f690" sshConfig="student@localhost:2222 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

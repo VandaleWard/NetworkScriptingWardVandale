@@ -9,7 +9,7 @@ variable "password" {
 }
 
 variable "folder_path" {
-  default = "IHaveNoBrainCells"
+  default = "ward"
 }
 
 variable "vault_pass" {
