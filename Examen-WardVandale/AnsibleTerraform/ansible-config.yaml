@@ -1,0 +1,66 @@
+- name: 'update Ubuntu VM'
+  hosts: ubuntu
+  tasks:
+    - name: 'apt update && apt upgrade'
+      command: 'apt update && apt update -y'
+
+- name: 'edit index.html file on ubuntu webserver'
+  hosts: ubuntu_webserver
+  tasks:
+    - command: 'sed -i "s/to nginx/to webserver-00/g" /var/www/html/index.nginx-debian.html'
+
+- name: 'install nginx on centOS'
+  hosts: centos_webserver
+  tasks:
+    - command: 'yum install nginx -y'
+    - copy:
+        src: index.html
+        dest: /usr/share/nginx/html/index.html
+    - command: 'firewall-cmd --permanent --zone=public --add-service=http'
+    - command: 'firewall-cmd --reload'
+    - command: 'systemctl enable nginx'
+    - command: 'systemctl start nginx'
+
+- name: 'configure loadbalancer'
+  hosts: loadbalancer
+  tasks:
+    - copy:
+        src: nginx.conf
+        dest: /etc/nginx/nginx.conf
+    - copy:
+        src: servers.conf
+        dest: /etc/nginx/servers.conf
+    - command: 'systemctl restart nginx'
+
+    - name: 'Allow everything and enable UFW'
+      community.general.ufw:
+          state: enabled
+          policy: allow
+
+    - name: 'Set logging'
+      community.general.ufw:
+          logging: 'on'
+
+    - name: 'Allow all access to tcp port 80'
+      community.general.ufw:
+          rule: allow
+          port: '80'
+          proto: tcp
+
+    - name: 'Allow all access from private networks to this host'
+      community.general.ufw:
+          rule: allow
+          port: '22'
+          proto: tcp
+          src: '{{ item }}'
+      loop:
+          - 192.168.50.0/24
+
+    - name: 'Deny all access from public networks to this host'
+      community.general.ufw:
+          rule: deny
+          port: '22'
+          proto: tcp
+          src: '{{ item }}'
+      loop:
+          - 0.0.0.0/0
