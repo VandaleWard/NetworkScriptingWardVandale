@@ -39,3 +39,5 @@ interface eth0 \
 arping 192.168.66.6 \
 fallback static_eth0 \
 DHCPCDEOF' $currFile
+
+# Source used: https://stackoverflow.com/questions/32007152/insert-multiple-lines-of-text-before-specific-line-using-bash
