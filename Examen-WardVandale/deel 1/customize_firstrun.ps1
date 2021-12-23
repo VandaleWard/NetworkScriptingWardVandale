@@ -28,3 +28,5 @@ else{
     $newFile | Out-File "C:\Users\vanda\Desktop\Network Scripting\NetworkScriptingWardVandale\Examen-WardVandale\firstrun.sh" }
     
  }
+
+# Source used: https://stackoverflow.com/questions/46582073/powershell-append-text-before-specific-line-instead-of-after
